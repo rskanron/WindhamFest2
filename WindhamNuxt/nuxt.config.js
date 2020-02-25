@@ -55,8 +55,12 @@ export default {
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
+    treeShake: true,
     customVariables: ['~/assets/variables.scss'],
     theme: {
+      options: {
+        customProperties: true,
+      },
       dark: true,
       themes: {
         dark: {
@@ -79,6 +83,10 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      // https://medium.com/js-dojo/debugging-nuxt-js-with-vs-code-60a1a9e75cf6
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
     }
   }
 }
