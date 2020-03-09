@@ -57,10 +57,15 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
+          icon: 'mdi-video',
+          title: 'Videos',
+          to: '/videos'
+        },
+        {
+          icon: 'mdi-music',
+          title: 'Music',
+          to: '/Music'
+        },
       ],
       miniVariant: false,
       right: false,
