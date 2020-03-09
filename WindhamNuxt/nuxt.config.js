@@ -88,5 +88,9 @@ export default {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
     }
+  },
+  // Per https://nuxtjs.org/faq/netlify-deployment/
+  generate: {
+    fallback: true,
   }
 }
