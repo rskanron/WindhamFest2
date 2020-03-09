@@ -5,26 +5,16 @@
     <v-flex xs12 sm8 md6 body-2>
 
       <div class="text-center">
-        <p class="text-center">Get ready for the event of the CENTURYYY!!!.</p>
-        <p class="text-center"> THE WINDHAMFEST WRESTLING FEDERATION (WWF) is proud to present:</p>
-        
-        <h2 style="text-align: center;" class="primary--text display-2">Mountain SLAMMMMMM!!</h2>
-        
-        <br>
-
-        <p>From: Aug 1 at 12:00 PM EDT</p>
-        <p>To: Aug 4 at 6:00 PM EDT</p>
+        <p>Thursday July, 31 to Sunday August, 2</p>
         
         <p>Join the <a href="https://www.facebook.com/groups/234997123205826/">Facebook Group</a> or ask a friend for more details.</p>
-
       </div>     
 
       <br>
 
+      <h3>Expect:</h3>
 
-      <h3 >Expect:</h3>
-
-      <p>The best bands and DJ's EVER!!!</p>
+      <p>The best bands and DJ's EVER!</p>
 
       <p>WWF Olympics will include, Suplexball, Boston Crab Soccer, Macho Flip CUP, Warrior Keg Toss, Sandal Drop Kick, ROID RAGE RELAY around the lake!!!</p>
 
