@@ -1,22 +1,48 @@
 import colors from 'vuetify/es5/util/colors'
+import axios from 'axios'
+
+// Butter's JS library doesn't create the route I need to get all pages. See generate: routes() below
+// import Butter from 'buttercms';
+// const butter = Butter('api_key');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
+  render: {
+    ssr: true,
+  },
+  /*
+  ** @nuxtjs/pwa module options
+  */
+  // pwa: {
+  //   manifest: {
+  //     lang: 'en',
+  //     name: "PWATestApp",
+  //     short_name: "PWA/Nuxt - Test App",
+  //     display: 'standalone',
+  //     theme_color: '#F11010',
+  //   },
+  //   workbox: {
+  //     dev: isDev // Put workbox module into development mode based on current NODE_ENV variable
+  //   }
+  // },
+
   /*
   ** Headers of the page
   */
-  head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
+ head: {
+  titleTemplate: '%s - ' + process.env.npm_package_name,
+  title: process.env.npm_package_name || '',
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+  ],
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+  ]
+},
   /*
   ** Customize the progress-bar color
   */
@@ -89,8 +115,90 @@ export default {
       }
     }
   },
-  // Per https://nuxtjs.org/faq/netlify-deployment/
+  // router: {
+  //   extendRoutes (routes, resolve) {
+
+  //     var turnPagesIntoRoutes = function(pages) {
+  //       pages.forEach((page) => {
+  //         console.log("PAGE FROM BUTTER")
+  //         console.log(page)
+
+  //         let componentPath = '';
+  //         let chunkName = '';
+  //         switch(page.page_type) {
+  //           case "Simple": 
+  //             componentPath = 'components/Simple.vue'
+  //             chunkName = 'components/Simple'
+  //           default:
+  //             componentPath = 'components/Simple.vue'
+  //             chunkName = 'components/Simple'
+  //         }
+  
+  //         routes.push({
+  //           name: page.slug,
+  //           path: '/' + page.slug,
+  //           // component: resolve(__dirname, './components/Simple.vue'),
+  //           // component: resolve('~/components/Simple.vue'),
+  //           // components:{
+  //           //   default: './components/Simple.vue',
+  //           //   top: './components/Simple.vue',
+  //           // },
+  //           // chunkName: chunkName,          
+  //           payload: page,
+  //         })
+  //         console.log("ADDED ROUTE")
+  //       });
+
+  //       console.log('EXTENDED ROUTES');
+  //     }
+
+  //     //  console.log('CALLING THE API');
+  //     //   axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
+  //     //     .then((response) => {
+  //     //       const simplePages = response.data.data;
+  //     //       turnPagesIntoRoutes(simplePages);
+  //     //     });
+  //     // }
+
+  //     console.log('GETTING LOCAL DATA');
+  //     var siteContent = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
+  //     turnPagesIntoRoutes(siteContent.data);
+  //   }
+  // },
   generate: {
-    fallback: true,
+    fallback: true, // Per https://nuxtjs.org/faq/netlify-deployment/ -- note: no longer using netlify
+    async routes() {
+      // TODO: butter's JS library doesn't create the route I need to get all pages
+      // butter.page.retrieve('*', '').then((response) => {
+      //   console.log(response.data);
+      // });
+
+      console.log('CALLING THE API')
+
+      const response = await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1');
+      const simplePages = response.data.data;
+      
+      const routes = simplePages.map((page) => {
+        // console.log(page);
+        return {
+          // name: page.slug,
+          route: '/' + page.slug,
+          // components: {
+          //   default: `./components/Simple.vue`,
+          //   top: `./components/${page.page_type}.vue`,
+          // },
+          // chunkNames: {
+          //   top: `./components/${page.page_type}`,
+          // },
+          payload: page,
+        } 
+      });
+
+      console.log('GENERATED ROUTES');
+      // console.log(routes);
+
+      return routes;
+    }
   }
+
 }

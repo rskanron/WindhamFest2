@@ -43,6 +43,7 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -52,8 +53,8 @@ export default {
       fixed: false,
       navigation: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'home',
+          title: 'Home',
           to: '/'
         },
         {
