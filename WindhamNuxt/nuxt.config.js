@@ -8,25 +8,25 @@ import axios from 'axios'
 const isDev = process.env.NODE_ENV !== 'production';
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   render: {
-    ssr: true,
+    ssr: false,
   },
   /*
   ** @nuxtjs/pwa module options
   */
-  // pwa: {
-  //   manifest: {
-  //     lang: 'en',
-  //     name: "PWATestApp",
-  //     short_name: "PWA/Nuxt - Test App",
-  //     display: 'standalone',
-  //     theme_color: '#F11010',
-  //   },
-  //   workbox: {
-  //     dev: isDev // Put workbox module into development mode based on current NODE_ENV variable
-  //   }
-  // },
+  pwa: {
+    manifest: {
+      lang: 'en',
+      name: "PWATestApp",
+      short_name: "PWA/Nuxt - Test App",
+      display: 'standalone',
+      theme_color: '#F11010',
+    },
+    workbox: {
+      dev: isDev // Put workbox module into development mode based on current NODE_ENV variable
+    }
+  },
 
   /*
   ** Headers of the page
@@ -115,8 +115,17 @@ export default {
       }
     }
   },
-  // router: {
-  //   extendRoutes (routes, resolve) {
+  router: {
+    // testing 
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'home name',
+        path: '/home',
+        
+      })
+      console.log("ADDED ROUTE")
+    }
+  },
 
   //     var turnPagesIntoRoutes = function(pages) {
   //       pages.forEach((page) => {
@@ -172,6 +181,13 @@ export default {
       // butter.page.retrieve('*', '').then((response) => {
       //   console.log(response.data);
       // });
+
+      // var all = butter.page.list('*')
+      //   .then((response) => {
+      //     console.log(response.data);
+      // });
+
+      // console.log(all);
 
       console.log('CALLING THE API')
 

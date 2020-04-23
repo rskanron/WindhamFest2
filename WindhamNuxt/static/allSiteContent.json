@@ -1,0 +1,20 @@
+{
+    "meta": {
+        "next_page": null,
+        "count": 1,
+        "previous_page": null
+    },
+    "data": [   
+        {
+            "slug": "home",
+            "page_type": "simple",
+            "fields": {
+                "banner_image": "https://cdn.buttercms.com/hPsAo25dTPuFJdKykXa8",
+                "heading": "TEST",
+                "sub-heading": "TEST",
+                "body": "<p>TEST</p>",
+                "text_sections": []
+            }
+        }
+    ]
+}

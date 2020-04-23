@@ -6,34 +6,65 @@
 </template>
 
 <script>
+import axios from 'axios'
+
     export default {
+
         asyncData({params, error, payload}) {
-            console.log("Is Server: " + process.server)
-            console.log('PAYLOAD')
-            console.log(payload)
             if (payload) {
+                console.log('_slug - PAYLOAD:')
+                console.log(payload)
+
                 return {
                     page: payload                
                 }
+
             } else if(process.server) {
+                console.log("_slug - IS SERVER");
+                console.log("_slug - PARAMS:");
                 console.log(params)
+
                 var pages = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
-                console.log(pages)
+                var currentPageContent = pages.data.find(p => p.slug == params.slug);
+                console.log(currentPageContent);   
+
                 return {
-                    page: pages.data.find(p => p.slug == params.slug)
+                    page: currentPageContent
                 }
+
+            } else {
+                console.log('_slug - FALLBACK')
+
+                var allButterContentResponse = {};
+
+                return axios.get('/allSiteContent.json', 'utf8')
+                    .then(response => {
+                        console.log('_slug - AXIOS RESPONSE:')
+                        console.log(response);
+                        var pages = response.data.data;
+                        var currentPageContent = pages.find(page => page.slug == params.slug);
+                        console.log(currentPageContent);               
+                        
+                        return {
+                            page: currentPageContent
+                        }
+                    }
+                );
             }
         },
+
         computed: {
             componentInstance () {
-                console.log("COMPUTING INSTANCE")
+                console.log("_slug - COMPUTING INSTANCE, this.PAGE:")
                 console.log(this.page)
                 if (this.page && this.page.page_type) {
                     const pageType = this.page.page_type;
                     const moduleName = pageType[0].toUpperCase() + pageType.slice(1);
+
                     return () => import(`../components/${moduleName}.vue`)
                 } 
             }
         }, 
+
     }
 </script>
