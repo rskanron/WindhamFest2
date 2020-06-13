@@ -116,64 +116,25 @@ export default {
     }
   },
   router: {
-    // testing 
     extendRoutes (routes, resolve) {
-      routes.push({
-        name: 'home name',
-        path: '/home',
-        
-      })
-      console.log("ADDED ROUTE")
+
+      //  console.log('CALLING THE API');
+      //   axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
+      //     .then((response) => {
+      //       const simplePages = response.data.data;
+      //       turnPagesIntoRoutes(simplePages);
+      //     });
+      // }
+
+      console.log('GETTING LOCAL DATA');
+      var siteContent = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
+      var pageRoutes = turnPagesIntoRoutes(siteContent.data, resolve);
+      
+      routes = pageRoutes.forEach(pr => routes.push(pr));
+      console.log('EXTENDED ROUTES');
+      console.log(routes);
     }
   },
-
-  //     var turnPagesIntoRoutes = function(pages) {
-  //       pages.forEach((page) => {
-  //         console.log("PAGE FROM BUTTER")
-  //         console.log(page)
-
-  //         let componentPath = '';
-  //         let chunkName = '';
-  //         switch(page.page_type) {
-  //           case "Simple": 
-  //             componentPath = 'components/Simple.vue'
-  //             chunkName = 'components/Simple'
-  //           default:
-  //             componentPath = 'components/Simple.vue'
-  //             chunkName = 'components/Simple'
-  //         }
-  
-  //         routes.push({
-  //           name: page.slug,
-  //           path: '/' + page.slug,
-  //           // component: resolve(__dirname, './components/Simple.vue'),
-  //           // component: resolve('~/components/Simple.vue'),
-  //           // components:{
-  //           //   default: './components/Simple.vue',
-  //           //   top: './components/Simple.vue',
-  //           // },
-  //           // chunkName: chunkName,          
-  //           payload: page,
-  //         })
-  //         console.log("ADDED ROUTE")
-  //       });
-
-  //       console.log('EXTENDED ROUTES');
-  //     }
-
-  //     //  console.log('CALLING THE API');
-  //     //   axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
-  //     //     .then((response) => {
-  //     //       const simplePages = response.data.data;
-  //     //       turnPagesIntoRoutes(simplePages);
-  //     //     });
-  //     // }
-
-  //     console.log('GETTING LOCAL DATA');
-  //     var siteContent = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
-  //     turnPagesIntoRoutes(siteContent.data);
-  //   }
-  // },
   generate: {
     fallback: true, // Per https://nuxtjs.org/faq/netlify-deployment/ -- note: no longer using netlify
     async routes() {
@@ -217,4 +178,44 @@ export default {
     }
   }
 
+}
+
+var turnPagesIntoRoutes = function(pages, resolve) {
+
+  var pageRoutes = [];
+
+  pages.forEach((page) => {
+    // console.log("PAGE FROM BUTTER:")
+    // console.log(page)
+
+    let componentPath = '';
+    let chunkName = '';
+    switch(page.page_type) {
+      case "Simple": 
+        componentPath = 'components/Simple.vue'
+        chunkName = 'pages/Simple'
+      default:
+        componentPath = 'components/Simple.vue'
+        chunkName = 'pages/Simple'
+    }
+    
+    var route = {
+      name: page.slug,
+      path: '/' + page.slug,
+      component: resolve(__dirname, './components/Simple.vue'),
+      chunkName: chunkName,
+      // component: resolve('~/components/Simple.vue'),
+      // components:{
+      //   default: './components/Simple.vue',
+      //   top: './components/Simple.vue',
+      // },
+      payload: page,
+    };
+
+    pageRoutes.push(route);
+    console.log(`CREATED ROUTE FOR ${page.slug}`)
+    console.log(route);
+  });
+
+  return pageRoutes;
 }

@@ -12,6 +12,7 @@ import axios from 'axios'
 
         asyncData({params, error, payload}) {
             if (payload) {
+                
                 console.log('_slug - PAYLOAD:')
                 console.log(payload)
 
@@ -19,7 +20,8 @@ import axios from 'axios'
                     page: payload                
                 }
 
-            } else if(process.server) {
+            } else if (process.server) {
+
                 console.log("_slug - IS SERVER");
                 console.log("_slug - PARAMS:");
                 console.log(params)
@@ -33,6 +35,7 @@ import axios from 'axios'
                 }
 
             } else {
+
                 console.log('_slug - FALLBACK')
 
                 var allButterContentResponse = {};
@@ -50,6 +53,7 @@ import axios from 'axios'
                         }
                     }
                 );
+
             }
         },
 
