@@ -12,7 +12,7 @@
                 "banner_image": "https://cdn.buttercms.com/hPsAo25dTPuFJdKykXa8",
                 "heading": "TEST",
                 "sub-heading": "TEST",
-                "body": "<p>TEST</p>",
+                "body": "<p>This is where it all comes together</p><p>Let's have a good time</p>",
                 "text_sections": []
             }
         },
@@ -21,7 +21,7 @@
             "page_type": "layout",
             "fields": {
                 "banner_image": "https://cdn.buttercms.com/hPsAo25dTPuFJdKykXa8",
-                "heading": "TEST",
+                "heading": "Windhamfest 2020",
                 "sub-heading": "TEST",
                 "body": "<p>TEST</p>",
                 "text_sections": []

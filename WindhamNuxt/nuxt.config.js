@@ -8,9 +8,9 @@ import axios from 'axios'
 const isDev = process.env.NODE_ENV !== 'production';
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
   render: {
-    ssr: false,
+    ssr: true,
   },
   /*
   ** @nuxtjs/pwa module options
@@ -56,6 +56,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // auto-loads components. May be useful but wasn't loaded in time for use with setting up routes
+    // '~/plugins/componentLoader.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -117,104 +119,85 @@ export default {
   },
   router: {
     extendRoutes (routes, resolve) {
-
-      //  console.log('CALLING THE API');
-      //   axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
-      //     .then((response) => {
-      //       const simplePages = response.data.data;
-      //       turnPagesIntoRoutes(simplePages);
-      //     });
-      // }
-
-      console.log('GETTING LOCAL DATA');
-      var siteContent = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
-      var pageRoutes = turnPagesIntoRoutes(siteContent.data, resolve);
-      
-      routes = pageRoutes.forEach(pr => routes.push(pr));
-      console.log('EXTENDED ROUTES');
-      console.log(routes);
+      // doing anything asyncronously here blows past this entire method (until it's too late in the build), even if it's awaited!!
+      // await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
+      //   .then(response => { pages = response.data.data });
+      let pages = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8')).data;
+      let pageRoutes = turnPagesIntoRoutes(pages, resolve);
+      pageRoutes.forEach(pr => routes.push(pr));
+      console.log(routes)
     }
   },
-  generate: {
-    fallback: true, // Per https://nuxtjs.org/faq/netlify-deployment/ -- note: no longer using netlify
-    async routes() {
-      // TODO: butter's JS library doesn't create the route I need to get all pages
-      // butter.page.retrieve('*', '').then((response) => {
-      //   console.log(response.data);
-      // });
+  // generate is not needed since all routes are explicitly defined above (no pattern matching)
+  // generate: {
+    // Since switching to Vuex, fallback doesn't mean anything here for the catch-all route (not used anymore) using asyncData().
+    // Would need to implement fallbacks in the setup of Vuex modules
+    // fallback: true, // Per https://nuxtjs.org/faq/netlify-deployment/ -- note: no longer using netlify
+    // async routes() {
+    //   // TODO: butter's JS library doesn't create the route I need to get all pages
+    //   // butter.page.retrieve('*', '').then((response) => {
+    //   //   console.log(response.data);
+    //   // });
 
-      // var all = butter.page.list('*')
-      //   .then((response) => {
-      //     console.log(response.data);
-      // });
+    //   // var all = butter.page.list('*')
+    //   //   .then((response) => {
+    //   //     console.log(response.data);
+    //   // });
 
-      // console.log(all);
+    //   // console.log(all);
 
-      console.log('CALLING THE API')
+    //   console.log('CALLING THE API')
 
-      const response = await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1');
-      const simplePages = response.data.data;
+    //   const response = await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1');
+    //   const simplePages = response.data.data;
       
-      const routes = simplePages.map((page) => {
-        // console.log(page);
-        return {
-          // name: page.slug,
-          route: '/' + page.slug,
-          // components: {
-          //   default: `./components/Simple.vue`,
-          //   top: `./components/${page.page_type}.vue`,
-          // },
-          // chunkNames: {
-          //   top: `./components/${page.page_type}`,
-          // },
-          payload: page,
-        } 
-      });
+    //   const routes = simplePages.map((page) => {
+    //     return {
+    //       route: '/' + page.slug,
+    //       // payload: page,
+    //     } 
+    //   });
 
-      console.log('GENERATED ROUTES');
-      // console.log(routes);
+    //   console.log('GENERATED ROUTES');
 
-      return routes;
-    }
-  }
+    //   return routes;
+    // }
+  // }
 
 }
 
 var turnPagesIntoRoutes = function(pages, resolve) {
+  // Tried a better way to ensure components are available for use, but require isn't available. I suppose I could be imported? Didn't feel like messing with it here.
+  // const possibleComponents = require.context('@/components', false, /[a-zA-Z]\w+\.(vue)$/);
 
   var pageRoutes = [];
 
   pages.forEach((page) => {
-    // console.log("PAGE FROM BUTTER:")
-    // console.log(page)
+    let componentName = page.page_type; 
 
-    let componentPath = '';
-    let chunkName = '';
-    switch(page.page_type) {
-      case "Simple": 
-        componentPath = 'components/Simple.vue'
-        chunkName = 'pages/Simple'
-      default:
-        componentPath = 'components/Simple.vue'
-        chunkName = 'pages/Simple'
-    }
+    console.log("LOOKING FOR COMPONENT " + componentName)
+    let componentExists = require('fs').existsSync(`./components/${componentName}.vue`)
     
-    var route = {
-      name: page.slug,
-      path: '/' + page.slug,
-      component: resolve(__dirname, './components/Simple.vue'),
-      chunkName: chunkName,
-      // component: resolve('~/components/Simple.vue'),
-      // components:{
-      //   default: './components/Simple.vue',
-      //   top: './components/Simple.vue',
-      // },
-      payload: page,
-    };
+    if (componentExists) {
+      let componentPath = resolve(__dirname, `./components/${componentName}.vue`);
+      let chunkName = `pages_${componentName}`;
+      console.log(componentPath)
 
-    pageRoutes.push(route);
-    console.log(`CREATED ROUTE FOR ${page.slug}`)
-    console.log(route);
+      var route = {
+        name: page.slug,
+        path: '/' + page.slug,
+        component: componentPath,
+        chunkName: chunkName,
+        payload: page,
+        props: page.fields,
+      };
+  
+      pageRoutes.push(route);
+
+    } else {
+      console.log(`Couldn't find component for page type ${componentName}`)
+    }
+
   });
 
   return pageRoutes;

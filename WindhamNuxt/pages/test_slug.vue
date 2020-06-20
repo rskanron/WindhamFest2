@@ -6,6 +6,11 @@
 </template>
 
 <script>
+
+// Using Nuxt's built-in dynamic router, use this as the catch-all route to load other components dynamically
+// This allows for any slug to be mapped to any component, beyond the pattern matching that comes with Nuxt based on the route
+// This project was using this but is instead using the extendRoutes method in the config to assign the components and data
+
 import axios from 'axios'
 
     export default {

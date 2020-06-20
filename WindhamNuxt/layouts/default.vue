@@ -1,10 +1,10 @@
 <template>
   <v-app dark>
-   
-    <v-parallax dark app :src="require('@/assets/images/windham_lasers.jpg')">
+  
+    <v-parallax dark app v-bind:src="this.layout.banner_image">
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
-          <h1 class="display-3 font-weight-thin">WindhamFest 2020</h1>
+          <h1 class="display-3 font-weight-thin">{{ this.layout.heading }}</h1>
         </v-col>
       </v-row>
       <v-row></v-row>
@@ -43,7 +43,14 @@
 
 <script>
 
+import { mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState({
+      layout: state => state.modules.layout.layout,
+    })
+  },
   data () {
     return {
       expand: false,

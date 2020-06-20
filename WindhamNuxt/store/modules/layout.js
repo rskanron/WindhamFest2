@@ -14,6 +14,7 @@ export const actions = {
 		var result = await fetch('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1').then(response => response.json());
 		var layoutPage = result.data.find(x => x.page_type === "simple");
 
-        commit('setLayout', layoutPage.fields)
+		commit('setLayout', layoutPage.fields)
+		console.log("Layout initialized")
 	}
 }

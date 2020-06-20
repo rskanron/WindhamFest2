@@ -4,12 +4,12 @@
 
     <v-flex xs12 sm8 md6 body-2>
 
-      <h1>SIMPLE PAGE</h1>
+      <h1>{{ this.heading }}</h1>
 
-      <h2>Heading: {{ page.heading }}</h2>
+      <h2>{{ this.subHeading }}</h2>
 
-      <!-- heading -->
-      <!-- body -->
+      <section v-html="body"></section>
+
       <!-- text snippets -->
 
     </v-flex>
@@ -25,58 +25,28 @@
 </style>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
+  import { mapState } from 'vuex'
 
-export default {
-  // name: 'SimplePage',
-  // props: ['page'],
-  asyncData({params, error, payload}) {
-    if (payload) {
-        
-        console.log('_slug - PAYLOAD:')
-        console.log(payload)
-
-        return {
-            page: payload              
-        }
-
-    } else if (process.server) {
-
-        console.log("_slug - IS SERVER");
-        console.log("_slug - PARAMS:");
-        console.log(params)
-
-        var pages = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8'));
-        var currentPageContent = pages.data.find(p => p.slug == params.slug);
-        console.log(currentPageContent);   
-
-        return {
-            page: currentPageContent.fields
-        }
-
-    } else {
-
-        console.log('_slug - FALLBACK')
-
-        var allButterContentResponse = {};
-        console.log(params.slug)
-
-        return axios.get('/allSiteContent.json', 'utf8')
-            .then(response => {
-                console.log('_slug - AXIOS RESPONSE:')
-                console.log(response);
-                var pages = response.data.data;
-                var currentPageContent = pages.find(page => page.slug == params.slug);
-                console.log(currentPageContent);               
-                
-                return {
-                    page: currentPageContent.fields
-                }
-            }
-        );
-
-    }
-  },
-
-}
+  export default {
+    props: {
+      heading: {
+        type: String,
+        required: true
+      },
+      subHeading: {
+        type: String,
+        required: true,
+      },
+      body: {
+        type: String,
+        required: true
+      }
+    },
+    computed: {
+      ...mapState({
+        layout: state => state.modules.layout.layout,
+      })
+    },
+  }
 </script>
