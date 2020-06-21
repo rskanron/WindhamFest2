@@ -29,6 +29,7 @@
   import { mapState } from 'vuex'
 
   export default {
+    // TODO: Move page data to Vuex and get the route params in here instead
     props: {
       heading: {
         type: String,
@@ -42,11 +43,6 @@
         type: String,
         required: true
       }
-    },
-    computed: {
-      ...mapState({
-        layout: state => state.modules.layout.layout,
-      })
     },
   }
 </script>

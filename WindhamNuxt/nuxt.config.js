@@ -180,7 +180,7 @@ var turnPagesIntoRoutes = function(pages, resolve) {
     
     if (componentExists) {
       let componentPath = resolve(__dirname, `./components/${componentName}.vue`);
-      let chunkName = `pages_${componentName}`;
+      let chunkName = `pages_${componentName}_${page.slug}`;
       console.log(componentPath)
 
       var route = {
@@ -188,7 +188,6 @@ var turnPagesIntoRoutes = function(pages, resolve) {
         path: '/' + page.slug,
         component: componentPath,
         chunkName: chunkName,
-        payload: page,
         props: page.fields,
       };
   

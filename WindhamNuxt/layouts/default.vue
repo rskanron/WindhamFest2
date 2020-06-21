@@ -33,8 +33,20 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+
+    <div style="text-align: center">
+    </div>
+
+    <v-footer :absolute=true app>
+      <v-layout justify-center row wrap>
+          <a href="https://nuxtjs.org"><img alt="nuxt logo" width="250" src="~/assets/images/built-with-nuxt-white.svg"></a>
+      </v-layout>      
+      <v-layout justify-center row wrap>
+          <a href="https://buttercms.com/"><img width="486" height="121" src="https://cdn.buttercms.com/JSSDbrHPSnGlLUcyHTn5"></a>
+      </v-layout>
+      <v-layout justify-center row wrap>
+          <span>&copy; Rick Skanron {{ new Date().getFullYear() }}</span>
+      </v-layout>  
     </v-footer>
 
   </v-app>
