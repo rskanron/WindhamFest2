@@ -47,13 +47,13 @@
 </template>
 
 <script>
-import WinDoomFest2 from '~/components/WinDoomFest2'
+// import WinDoomFest2 from '~/components/WinDoomFest2'
 
     export default {
         name: 'VideoReel',
-         components: {
-            WinDoomFest2
-        }
+        //  components: {
+        //     WinDoomFest2
+        // }
     }
 
 </script>

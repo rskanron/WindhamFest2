@@ -43,8 +43,6 @@
 
         <a id="venmo_link" href="https://venmo.com/Pat-Kelly">Link to Venmo</a>
 
-        
-
     </div>
 
 </template>

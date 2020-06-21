@@ -1,8 +1,8 @@
 {
   "name": "Windhamfest",
   "version": "1.0.0",
-  "description": "Where Dreams Take Wing",
-  "author": "Richard J Skanron",
+  "description": "The place where miracles happen.",
+  "author": "Rick Skanron",
   "private": true,
   "scripts": {
     "dev": "nuxt",
