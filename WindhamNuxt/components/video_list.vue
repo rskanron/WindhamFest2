@@ -1,14 +1,17 @@
 <template>
     <div id="videos">
 
-        <h1 class="page_title">Videos</h1>
+        <h1>{{ heading }}</h1>
+        <h2>{{ subHeading }}</h2>
+        <p v-html="description"></p>
 
-        <br><br>
+        <br>
+        <br>
 
         <div id="video-reel">
-
+            
             <div id="windoomfest1">
-                <!-- <iframe src="https://player.vimeo.com/video/272444046" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+                <iframe src="https://player.vimeo.com/video/272444046" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
             
             <div id="windoomfest2">
@@ -47,13 +50,15 @@
 </template>
 
 <script>
-// import WinDoomFest2 from '~/components/WinDoomFest2'
 
     export default {
-        name: 'VideoReel',
-        //  components: {
-        //     WinDoomFest2
-        // }
+        props: [
+            "heading", 
+            "subHeading",
+            "description", 
+            "videos", 
+            "postVideosDescription",
+        ]
     }
 
 </script>

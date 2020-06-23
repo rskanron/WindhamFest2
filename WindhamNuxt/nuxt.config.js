@@ -122,7 +122,7 @@ export default {
       // doing anything asyncronously here blows past this entire method (until it's too late in the build), even if it's awaited!!
       // await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
       //   .then(response => { pages = response.data.data });
-      let pages = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8')).data;
+      let pages = JSON.parse(require('fs').readFileSync('./static/allSiteContent.json', 'utf8')).data;
       let pageRoutes = turnPagesIntoRoutes(pages, resolve);
       pageRoutes.forEach(pr => routes.push(pr));
       console.log(routes)

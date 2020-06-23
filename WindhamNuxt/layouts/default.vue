@@ -71,17 +71,17 @@ export default {
       fixed: false,
       navigation: [
         {
-          icon: 'home',
+          icon: 'mdi-glass-mug',
           title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-video',
+          icon: 'mdi-video-vintage',
           title: 'Videos',
           to: '/videos'
         },
         {
-          icon: 'mdi-music',
+          icon: 'mdi-glass-mug',
           title: 'Music',
           to: '/Music'
         },

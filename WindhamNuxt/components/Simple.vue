@@ -25,8 +25,6 @@
 </style>
 
 <script>
-  import axios from 'axios'
-  import { mapState } from 'vuex'
 
   export default {
     // TODO: Move page data to Vuex and get the route params in here instead
