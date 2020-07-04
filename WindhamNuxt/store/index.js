@@ -1,6 +1,6 @@
 const actions = {
 	async nuxtServerInit ({ dispatch }) {
-		await dispatch('modules/layout/initializeLayout');
+		await dispatch('modules/navigation/initialize');
 	}
 }
 

@@ -1,20 +1,34 @@
 <template>
 
-  <v-layout column justify-center align-center>
+<div>
 
-    <v-flex xs12 sm8 md6 body-2>
+  <v-parallax dark app v-bind:src="this.banner_image">
+    <v-row align="center" justify="center">
+      <v-col class="text-center" cols="12">
+        <h1 class="display-3 font-weight-thin">{{ this.heading }}</h1>
+        <br>
+        <h2 class="display-5 font-weight-thin">{{ this.subHeading }}</h2>
+      </v-col>
+    </v-row>
+    <v-row></v-row>
+  </v-parallax>
 
-      <h1>{{ this.heading }}</h1>
+  <v-content>
+    <v-container>
+      <v-layout column justify-center align-center>
+        <v-flex xs12 sm8 md6 body-2>      
+          <section v-html="body"></section>
 
-      <h2>{{ this.subHeading }}</h2>
+          <!-- text snippets -->
 
-      <section v-html="body"></section>
+        </v-flex>
 
-      <!-- text snippets -->
+      </v-layout>
 
-    </v-flex>
+    </v-container>
+  </v-content>
+</div>
 
-  </v-layout>
 
 </template>
 
@@ -27,8 +41,12 @@
 <script>
 
   export default {
-    // TODO: Move page data to Vuex and get the route params in here instead
+    // TODO: Move page data to Vuex and use page params here instead - when needed (nuxt won't let have both together)
     props: {
+      banner_image: {
+        type: String,
+        require: true,
+      },
       heading: {
         type: String,
         required: true
