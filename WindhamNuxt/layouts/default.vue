@@ -40,47 +40,36 @@
 
 </template>
 
-<script>
-
-import { mapState } from 'vuex'
-
-export default {
-  computed: {
-    ...mapState({
-      navigation: state => state.modules.navigation.navigation,
-    })
-  },
-  data () {
-    return {
-      expand: false,
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      // navigation: [
-      //   {
-      //     icon: 'mdi-glass-mug',
-      //     title: 'Home',
-      //     to: '/'
-      //   },
-      //   {
-      //     icon: 'mdi-video-vintage',
-      //     title: 'Videos',
-      //     to: '/videos'
-      //   },
-      //   {
-      //     icon: 'mdi-glass-mug',
-      //     title: 'Music',
-      //     to: '/Music'
-      //   },
-      // ],
-      miniVariant: false,
-      right: false,
-      rightDrawer: false,
-      title: 'WindhamFest'
-    }
-  },
-  mounted () {
-    this.expand = true;
+<style>  
+/* TODO: define mappings of other html elements to the color scheme */
+  h3 {
+    color: var(--v-primary-base);
   }
-}
+</style>
+
+<script>
+  import { mapState } from 'vuex'
+
+  export default {
+    computed: {
+      ...mapState({
+        navigation: state => state.modules.navigation.navigation,
+      })
+    },
+    data () {
+      return {
+        expand: false,
+        clipped: false,
+        drawer: false,
+        fixed: false,
+        miniVariant: false,
+        right: false,
+        rightDrawer: false,
+        title: 'WindhamFest'
+      }
+    },
+    mounted () {
+      this.expand = true;
+    }
+  }
 </script>

@@ -1,47 +1,33 @@
 <template>
+  <div>
 
-<div>
+    <v-parallax dark app v-bind:src="this.banner_image">
+      <v-row align="center" justify="center">
+        <v-col class="text-center" cols="12">
+          <h1 class="display-3 font-weight-thin">{{ this.heading }}</h1>
+          <br>
+          <h2 class="display-5 font-weight-thin">{{ this.subHeading }}</h2>
+        </v-col>
+      </v-row>
+      <v-row></v-row>
+    </v-parallax>
 
-  <v-parallax dark app v-bind:src="this.banner_image">
-    <v-row align="center" justify="center">
-      <v-col class="text-center" cols="12">
-        <h1 class="display-3 font-weight-thin">{{ this.heading }}</h1>
-        <br>
-        <h2 class="display-5 font-weight-thin">{{ this.subHeading }}</h2>
-      </v-col>
-    </v-row>
-    <v-row></v-row>
-  </v-parallax>
+    <v-content>
+      <v-container>
+        <v-layout column justify-center align-center>
+          <v-flex xs12 sm8 md6 body-2>      
+            <section v-html="body"></section>
+            <!-- TODO: implement text snippets -->
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
 
-  <v-content>
-    <v-container>
-      <v-layout column justify-center align-center>
-        <v-flex xs12 sm8 md6 body-2>      
-          <section v-html="body"></section>
-
-          <!-- text snippets -->
-
-        </v-flex>
-
-      </v-layout>
-
-    </v-container>
-  </v-content>
-</div>
-
-
+  </div>
 </template>
 
-<style>  
-  h3 {
-    color: var(--v-primary-base);
-  }
-</style>
-
 <script>
-
   export default {
-    // TODO: Move page data to Vuex and use page params here instead - when needed (nuxt won't let have both together)
     props: {
       banner_image: {
         type: String,
@@ -59,6 +45,6 @@
         type: String,
         required: true
       }
-    },
+    }
   }
 </script>

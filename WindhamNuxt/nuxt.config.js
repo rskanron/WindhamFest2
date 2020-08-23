@@ -9,7 +9,6 @@ if(config.error){
   console.log('Could not load env file', config.error)
 } else {
   console.log('------- env file loaded --------')
-  console.log(config)
 }
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -129,19 +128,29 @@ export default {
       console.log("EXTEND ROUTES")
       console.log(process.env.VUE_APP_BUTTER_API_KEY)
   
-      let simplePagesResponse = request(
-        'GET', 
-        `https://api.buttercms.com/v2/pages/simple?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
-        
-      var simplePagesJson = JSON.parse(simplePagesResponse.getBody()).data;
-      const simplePageComponent = resolve(__dirname, 'components/simple.vue')
+      var pageTypes = [
+        'simple',
+        'videos'
+      ]
 
-      simplePageRoutes = mapPagesToRoutes(simplePagesJson, simplePageComponent)
-        
-      console.log("FINISHED GETTING ROUTES)")
+      pageTypes.forEach(pageType => {
+        let simplePagesResponse = request(
+          'GET', 
+          `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
+          
+        var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
+        const simplePageComponent = resolve(__dirname, `components/${pageType}.vue`)
+  
+        console.log(`PAGE TYPE DATA for ${pageType} _________________`)
+        // console.log(JSON.stringify(pagesJson, null, 4))
 
-      if (simplePageRoutes)
-        simplePageRoutes.forEach(r => routes.push(r))
+        let pageRoutes = mapPagesToRoutes(pagesJson, simplePageComponent)
+          
+        console.log("FINISHED GETTING ROUTES)")
+  
+        if (pageRoutes)
+          pageRoutes.forEach(pageRoute => routes.push(pageRoute))
+      });
     }
   },
   // see https://github.com/nuxt-community/router-module
