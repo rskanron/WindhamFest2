@@ -1,5 +1,17 @@
 import colors from 'vuetify/es5/util/colors'
 
+import dotenv from 'dotenv'
+import Butter from 'buttercms';
+import request from 'sync-request';
+
+const config = dotenv.config()
+if(config.error){
+  console.log('Could not load env file', config.error)
+} else {
+  console.log('------- env file loaded --------')
+  console.log(config)
+}
+
 const isDev = process.env.NODE_ENV !== 'production';
 
 export default {
@@ -59,7 +71,6 @@ export default {
   */
   buildModules: [
     '@nuxtjs/vuetify',
-    '@nuxtjs/router',
   ],
   /*
   ** Nuxt.js modules
@@ -113,6 +124,26 @@ export default {
       }
     }
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      console.log("EXTEND ROUTES")
+      console.log(process.env.VUE_APP_BUTTER_API_KEY)
+  
+      let simplePagesResponse = request(
+        'GET', 
+        `https://api.buttercms.com/v2/pages/simple?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
+        
+      var simplePagesJson = JSON.parse(simplePagesResponse.getBody()).data;
+      const simplePageComponent = resolve(__dirname, 'components/simple.vue')
+
+      simplePageRoutes = mapPagesToRoutes(simplePagesJson, simplePageComponent)
+        
+      console.log("FINISHED GETTING ROUTES)")
+
+      if (simplePageRoutes)
+        simplePageRoutes.forEach(r => routes.push(r))
+    }
+  },
   // see https://github.com/nuxt-community/router-module
   // If you are using SPA mode, add an index / route to generate section of nuxt.config.js:
   // generate: {
@@ -120,6 +151,26 @@ export default {
     //   '/'
     // ]
   // }
+}
+
+var mapPagesToRoutes = function(pages, component) {
+  var pageRoutes = [];
+
+  pages.forEach((page) => {
+      let componentName = page.page_type; 
+      let chunkName = `pages_${componentName}_${page.slug}`;  
+      var route = {
+        name: page.slug,
+        path: '/' + page.slug,
+        component: component,
+        chunkName: chunkName,
+        props: page.fields,
+      };
+  
+      pageRoutes.push(route);
+  });
+
+  return pageRoutes;
 }
 
 
