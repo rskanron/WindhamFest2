@@ -1,9 +1,15 @@
 import colors from 'vuetify/es5/util/colors'
-import axios from 'axios'
 
-// Butter's JS library doesn't create the route I need to get all pages. See generate: routes() below
-// import Butter from 'buttercms';
-// const butter = Butter('api_key');
+import dotenv from 'dotenv'
+import Butter from 'buttercms';
+import request from 'sync-request';
+
+const config = dotenv.config()
+if(config.error){
+  console.log('Could not load env file', config.error)
+} else {
+  console.log('------- env file loaded --------')
+}
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -81,6 +87,7 @@ export default {
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
+  ** https://v15.vuetifyjs.com/en/framework/theme/
   */
   vuetify: {
     treeShake: true,
@@ -92,7 +99,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: colors.blue.darken4,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -118,86 +125,57 @@ export default {
     }
   },
   router: {
-    extendRoutes (routes, resolve) {
-      // doing anything asyncronously here blows past this entire method (until it's too late in the build), even if it's awaited!!
-      // await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1')
-      //   .then(response => { pages = response.data.data });
-      let pages = JSON.parse(require('fs').readFileSync('./butter_content/allSiteContent.json', 'utf8')).data;
-      let pageRoutes = turnPagesIntoRoutes(pages, resolve);
-      pageRoutes.forEach(pr => routes.push(pr));
-      console.log(routes)
+    extendRoutes(routes, resolve) {
+  
+      var pageTypes = [
+        'simple',
+        'videos'
+      ]
+
+      pageTypes.forEach(pageType => {
+        let simplePagesResponse = request(
+          'GET', 
+          `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
+          
+        var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
+        const simplePageComponent = resolve(__dirname, `components/${pageType}.vue`)
+
+        let pageRoutes = mapPagesToRoutes(pagesJson, simplePageComponent)
+            
+        if (pageRoutes) {
+          pageRoutes.forEach(pageRoute => routes.push(pageRoute))
+        }
+      });
     }
   },
-  // generate is not needed since all routes are explicitly defined above (no pattern matching)
+  // see https://github.com/nuxt-community/router-module
+  // If you are using SPA mode, add an index / route to generate section of nuxt.config.js:
   // generate: {
-    // Since switching to Vuex, fallback doesn't mean anything here for the catch-all route (not used anymore) using asyncData().
-    // Would need to implement fallbacks in the setup of Vuex modules
-    // fallback: true, // Per https://nuxtjs.org/faq/netlify-deployment/ -- note: no longer using netlify
-    // async routes() {
-    //   // TODO: butter's JS library doesn't create the route I need to get all pages
-    //   // butter.page.retrieve('*', '').then((response) => {
-    //   //   console.log(response.data);
-    //   // });
-
-    //   // var all = butter.page.list('*')
-    //   //   .then((response) => {
-    //   //     console.log(response.data);
-    //   // });
-
-    //   // console.log(all);
-
-    //   console.log('CALLING THE API')
-
-    //   const response = await axios.get('https://api.buttercms.com/v2/pages/simple?auth_token=b3c9a561dcfeb322516598e4f037b0ffa65a3ef1');
-    //   const simplePages = response.data.data;
-      
-    //   const routes = simplePages.map((page) => {
-    //     return {
-    //       route: '/' + page.slug,
-    //       // payload: page,
-    //     } 
-    //   });
-
-    //   console.log('GENERATED ROUTES');
-
-    //   return routes;
-    // }
+    // routes: [
+    //   '/'
+    // ]
   // }
-
 }
 
-var turnPagesIntoRoutes = function(pages, resolve) {
-  // Tried a better way to ensure components are available for use, but require isn't available. I suppose I could be imported? Didn't feel like messing with it here.
-  // const possibleComponents = require.context('@/components', false, /[a-zA-Z]\w+\.(vue)$/);
-
+var mapPagesToRoutes = function(pages, component) {
   var pageRoutes = [];
 
   pages.forEach((page) => {
-    let componentName = page.page_type; 
-
-    console.log("LOOKING FOR COMPONENT " + componentName)
-    let componentExists = require('fs').existsSync(`./components/${componentName}.vue`)
-    
-    if (componentExists) {
-      let componentPath = resolve(__dirname, `./components/${componentName}.vue`);
-      let chunkName = `pages_${componentName}_${page.slug}`;
-      console.log(componentPath)
-
+      let componentName = page.page_type; 
+      let chunkName = `pages_${componentName}_${page.slug}`;  
       var route = {
         name: page.slug,
         path: '/' + page.slug,
-        component: componentPath,
+        component: component,
         chunkName: chunkName,
         props: page.fields,
       };
   
       pageRoutes.push(route);
-
-    } else {
-      console.log(`Couldn't find component for page type ${componentName}`)
-    }
-
+      console.log(route)
   });
 
   return pageRoutes;
 }
+
+

@@ -1,36 +1,38 @@
 <template>
+  <div>
 
-  <v-layout column justify-center align-center>
+    <v-parallax dark app v-bind:src="this.banner_image">
+      <v-row align="center" justify="center">
+        <v-col class="text-center" cols="12">
+          <h1 class="display-3 font-weight-thin">{{ this.heading }}</h1>
+          <br>
+          <h2 class="display-5 font-weight-thin">{{ this.subHeading }}</h2>
+        </v-col>
+      </v-row>
+      <v-row></v-row>
+    </v-parallax>
 
-    <v-flex xs12 sm8 md6 body-2>
+    <v-content>
+      <v-container>
+        <v-layout column justify-center align-center>
+          <v-flex xs12 sm8 md6 body-2>      
+            <section v-html="body"></section>
+            <!-- TODO: implement text snippets -->
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
 
-      <h1>{{ this.heading }}</h1>
-
-      <h2>{{ this.subHeading }}</h2>
-
-      <section v-html="body"></section>
-
-      <!-- text snippets -->
-
-    </v-flex>
-
-  </v-layout>
-
+  </div>
 </template>
 
-<style>  
-  h3 {
-    color: var(--v-primary-base);
-  }
-</style>
-
 <script>
-  import axios from 'axios'
-  import { mapState } from 'vuex'
-
   export default {
-    // TODO: Move page data to Vuex and get the route params in here instead
     props: {
+      banner_image: {
+        type: String,
+        require: true,
+      },
       heading: {
         type: String,
         required: true
@@ -43,6 +45,6 @@
         type: String,
         required: true
       }
-    },
+    }
   }
 </script>
