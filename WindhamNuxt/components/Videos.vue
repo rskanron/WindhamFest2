@@ -1,39 +1,53 @@
 <template>
     <v-content>
         <v-container>
-            <div>
+            <h1>{{ heading }}</h1>
+            <h2>{{ subHeading }}</h2>
+            <p v-html="description"></p>
 
-                <h1>{{ heading }}</h1>
-                <h2>{{ subHeading }}</h2>
-                <p v-html="description"></p>
 
-                <br>
-                    {{ description }}
-                <br>
+            <v-row class="mb-12">
+                <v-col 
+                v-for="video in videos"
+                :key="video.heading"
+                :lg="4"
+                :md="6"
+                :sm="12"
+                >
+                    <v-card
+                    class=""
+                    outlined
+                    tile
+                    >
+                        <h2>{{ video.heading }}</h2>
 
-                <!-- TODO: style videos -->
-                <div v-for="video in videos" :key="video.heading">
-                    <h3>{{ video.heading }}</h3>
-                    <h2 v-html=video.description></h2>
-                    <iframe 
-                        :src="video.video_url" 
-                        frameborder="0" 
-                        webkitallowfullscreen 
-                        mozallowfullscreen 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-        
-                <br>
-
-                <p style="text-align: center;" class="vimeo-description">
-                    Videos Produced by Geoff Thomas - <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
-                </p>
-
-            </div>
+                        <div style="padding:56.25% 0 0 0;position:relative;">
+                            <iframe 
+                                :src="video.video_url + `?title=0&byline=0`"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                            >
+                            </iframe>
+                        </div>
+                            
+                        <h3 v-html=video.description></h3>
+                    </v-card>
+                </v-col>
+            </v-row>
         </v-container>
+        
+        <p style="text-align: center;" class="vimeo-description">
+            Videos Produced by Geoff Thomas - <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
+        </p>
+
     </v-content>
+
+
 </template>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
 
 <script>
     export default {
@@ -44,37 +58,22 @@
             "videos", 
             "postVideosDescription",
         ],
+
+        computed: {
+            colWidth () {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs': return 12
+                    case 'sm': return 12
+                    case 'md': return 6
+                    case 'lg': return 4
+                    case 'xl': return 3
+                }
+            }
+      },
+
     }
 </script>
 
 <style scoped>
-
-    h3 {
-        color: var(--v-primary-base);
-    }
-
-    /* #videos {
-        text-align: center;
-    }
-
-    #video-reel {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    #video-reel>* {
-        flex: 1 1 338px;
-        min-height: 250px;
-        margin: 0em 1em;
-    }
-
-    iframe {
-        padding-bottom: 56.25%;
-        padding-bottom: 40%;
-        width: 100%;
-        max-width: 600px;
-        max-height: 338px;
-        height: 100%;
-     } */
 
 </style>

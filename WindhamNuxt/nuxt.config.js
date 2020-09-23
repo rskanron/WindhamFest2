@@ -87,6 +87,7 @@ export default {
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
+  ** https://v15.vuetifyjs.com/en/framework/theme/
   */
   vuetify: {
     treeShake: true,
@@ -98,7 +99,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: colors.blue.darken4,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -125,8 +126,6 @@ export default {
   },
   router: {
     extendRoutes(routes, resolve) {
-      console.log("EXTEND ROUTES")
-      console.log(process.env.VUE_APP_BUTTER_API_KEY)
   
       var pageTypes = [
         'simple',
@@ -140,16 +139,12 @@ export default {
           
         var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
         const simplePageComponent = resolve(__dirname, `components/${pageType}.vue`)
-  
-        console.log(`PAGE TYPE DATA for ${pageType} _________________`)
-        // console.log(JSON.stringify(pagesJson, null, 4))
 
         let pageRoutes = mapPagesToRoutes(pagesJson, simplePageComponent)
-          
-        console.log("FINISHED GETTING ROUTES)")
-  
-        if (pageRoutes)
+            
+        if (pageRoutes) {
           pageRoutes.forEach(pageRoute => routes.push(pageRoute))
+        }
       });
     }
   },
@@ -177,6 +172,7 @@ var mapPagesToRoutes = function(pages, component) {
       };
   
       pageRoutes.push(route);
+      console.log(route)
   });
 
   return pageRoutes;

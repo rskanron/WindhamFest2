@@ -41,9 +41,14 @@
 </template>
 
 <style>  
-/* TODO: define mappings of other html elements to the color scheme */
-  h3 {
+  h1 {
     color: var(--v-primary-base);
+  }
+  h2 {
+    color: var(--v-secondary-base);
+  }
+  h3 {
+    color: var(--v-accent-base);
   }
 </style>
 
