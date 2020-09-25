@@ -138,6 +138,7 @@ export default {
           `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
           
         var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
+
         const simplePageComponent = resolve(__dirname, `components/${pageType}.vue`)
 
         let pageRoutes = mapPagesToRoutes(pagesJson, simplePageComponent)
