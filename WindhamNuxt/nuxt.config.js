@@ -127,6 +127,8 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
   
+      routes.pop();
+
       var pageTypes = [
         'simple',
         'videos'
@@ -166,7 +168,7 @@ var mapPagesToRoutes = function(pages, component) {
   pages.forEach((page) => {
       let componentName = page.page_type; 
       let chunkName = `pages_${componentName}_${page.slug}`;  
-      var route = {
+      let route = {
         name: page.slug,
         path: '/' + page.slug,
         component: component,
@@ -175,6 +177,14 @@ var mapPagesToRoutes = function(pages, component) {
       };
   
       pageRoutes.push(route);
+
+      if (page.slug.toLowerCase() == "home")
+      {
+        let defaultRoute = JSON.parse(JSON.stringify(route));
+        defaultRoute.name = '';
+        defaultRoute.path = '/';
+        pageRoutes.push(defaultRoute);
+      }
   });
 
   return pageRoutes;
