@@ -132,12 +132,15 @@ export default {
         'videos'
       ]
 
+      console.log("CURRENT DIRECTORY: " + __dirname);
+
       pageTypes.forEach(pageType => {
         let simplePagesResponse = request(
           'GET', 
           `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}`);
           
         var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
+
         const simplePageComponent = resolve(__dirname, `components/${pageType}.vue`)
 
         let pageRoutes = mapPagesToRoutes(pagesJson, simplePageComponent)
@@ -172,7 +175,6 @@ var mapPagesToRoutes = function(pages, component) {
       };
   
       pageRoutes.push(route);
-      console.log(route)
   });
 
   return pageRoutes;
