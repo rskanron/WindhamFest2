@@ -132,6 +132,8 @@ export default {
         'videos'
       ]
 
+      console.log("CURRENT DIRECTORY: " + __dirname);
+
       pageTypes.forEach(pageType => {
         let simplePagesResponse = request(
           'GET', 
@@ -173,7 +175,6 @@ var mapPagesToRoutes = function(pages, component) {
       };
   
       pageRoutes.push(route);
-      console.log(route)
   });
 
   return pageRoutes;
