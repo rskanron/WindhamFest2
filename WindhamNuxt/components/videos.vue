@@ -1,9 +1,9 @@
 <template>
-    <v-content>
+    <v-main>
         <v-container>
-            <h1>{{ heading }}</h1>
-            <h2>{{ subHeading }}</h2>
-            <p v-html="description"></p>
+            <h1 style="text-align: center">{{ heading }}</h1>
+            <h2 style="text-align: center">{{ subHeading }}</h2>
+            <p style="text-align: center" v-html="description"></p>
 
 
             <v-row class="mb-12">
@@ -15,11 +15,11 @@
                 :sm="12"
                 >
                     <v-card
-                    class=""
-                    outlined
-                    tile
+                        class=""
+                        outlined
+                        tile
                     >
-                        <h2>{{ video.heading }}</h2>
+                        <h2 style="text-align: center;">{{ video.heading }}</h2>
 
                         <div style="padding:56.25% 0 0 0;position:relative;">
                             <iframe 
@@ -42,7 +42,7 @@
             Videos Produced by Geoff Thomas - <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
         </p>
 
-    </v-content>
+    </v-main>
 
 
 </template>

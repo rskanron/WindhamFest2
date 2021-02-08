@@ -1,7 +1,12 @@
 <template>
   <v-app dark>
     
-   <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
+   <v-navigation-drawer 
+      app
+      temporary
+      v-model="drawer" 
+      :clipped="clipped"
+    >
       <v-list>
         <v-list-item v-for="(item, i) in navigation" :key="i" :to="item.path" router exact>
           <v-list-item-action>
@@ -16,20 +21,17 @@
   
     <nuxt />
 
-    <v-app-bar :clipped-left="clipped" fixed app >
+    <v-app-bar :clipped-left="clipped" collapse app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
 
-    <div style="text-align: center">
-    </div>
-
     <v-footer :absolute=true app>
+      <!-- <v-layout justify-center row wrap>
+          <a href="https://nuxtjs.org"><img alt="nuxt logo" width="150" src="~/assets/images/built-with-nuxt-white.svg"></a>
+      </v-layout>       -->
       <v-layout justify-center row wrap>
-          <a href="https://nuxtjs.org"><img alt="nuxt logo" width="250" src="~/assets/images/built-with-nuxt-white.svg"></a>
-      </v-layout>      
-      <v-layout justify-center row wrap>
-          <a href="https://buttercms.com/"><img width="486" height="121" src="https://cdn.buttercms.com/JSSDbrHPSnGlLUcyHTn5"></a>
+          <a href="https://buttercms.com/"><img width="243" height="61" src="https://cdn.buttercms.com/JSSDbrHPSnGlLUcyHTn5"></a>
       </v-layout>
       <v-layout justify-center row wrap>
           <span>&copy; Rick Skanron {{ new Date().getFullYear() }}</span>
