@@ -11,7 +11,7 @@
       <v-row></v-row>
     </v-parallax>
 
-    <v-content>
+    <v-main>
       <v-container>
         <v-layout column justify-center align-center>
           <v-flex xs12 sm8 md6 body-2>      
@@ -20,7 +20,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-spacer></v-spacer>
 

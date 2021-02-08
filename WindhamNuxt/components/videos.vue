@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-main>
         <v-container>
             <h1 style="text-align: center">{{ heading }}</h1>
             <h2 style="text-align: center">{{ subHeading }}</h2>
@@ -42,7 +42,7 @@
             Videos Produced by Geoff Thomas - <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
         </p>
 
-    </v-content>
+    </v-main>
 
 
 </template>

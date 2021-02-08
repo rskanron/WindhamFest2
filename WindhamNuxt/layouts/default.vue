@@ -27,9 +27,9 @@
     </v-app-bar>
 
     <v-footer :absolute=true app>
-      <v-layout justify-center row wrap>
+      <!-- <v-layout justify-center row wrap>
           <a href="https://nuxtjs.org"><img alt="nuxt logo" width="150" src="~/assets/images/built-with-nuxt-white.svg"></a>
-      </v-layout>      
+      </v-layout>       -->
       <v-layout justify-center row wrap>
           <a href="https://buttercms.com/"><img width="243" height="61" src="https://cdn.buttercms.com/JSSDbrHPSnGlLUcyHTn5"></a>
       </v-layout>
