@@ -3,9 +3,9 @@
     <v-parallax dark app v-bind:src="this.banner_image">
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
-          <h1 class="display-3 font-weight-light">{{ this.heading }}</h1>
+          <h1 class="display-2 font-weight-light">{{ this.heading }}</h1>
           <br>
-          <h2 class="display-5 font-weight-thin">{{ this.subHeading }}</h2>
+          <h2 class="font-weight-thin">{{ this.subHeading }}</h2>
         </v-col>
       </v-row>
       <v-row></v-row>
