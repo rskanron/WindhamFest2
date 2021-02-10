@@ -1,30 +1,41 @@
 <template>
   <v-app dark>
     
-   <v-navigation-drawer 
-      app
-      temporary
-      v-model="drawer" 
-      :clipped="clipped"
-    >
+   <v-navigation-drawer v-model="sidebar" temporary app>
       <v-list>
         <v-list-item v-for="(item, i) in navigation" :key="i" :to="item.path" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.text" />
+            {{item.text}}
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  
-    <nuxt />
 
-    <v-app-bar :clipped-left="clipped" collapse app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+    <v-app-bar app>
+      <span class="hidden-sm-and-up">
+        <v-app-bar-nav-icon @click="sidebar = !sidebar" />
+      </span>
+      <v-toolbar-title>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          {{ title }}
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-xs-only">
+        <v-btn
+          text
+          v-for="(item, i) in navigation" :key="i" :to="item.path"
+        >
+          <v-icon left dark>{{ item.icon }}</v-icon>
+          {{ item.text }}
+        </v-btn>
+      </v-toolbar-items>
     </v-app-bar>
+
+    <nuxt />
 
     <v-footer :absolute=true app>
       <!-- <v-layout justify-center row wrap>
@@ -72,7 +83,8 @@
         miniVariant: false,
         right: false,
         rightDrawer: false,
-        title: 'WindhamFest'
+        sidebar: false,
+        title: 'Windhamfest'
       }
     },
     mounted () {
