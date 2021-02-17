@@ -5,21 +5,19 @@
             <h2 style="text-align: center">{{ subHeading }}</h2>
             <p style="text-align: center" v-html="description"></p>
 
-
             <v-row class="mb-12">
                 <v-col 
-                v-for="video in videos"
-                :key="video.heading"
-                :lg="4"
-                :md="6"
-                :sm="12"
+                    v-for="video in videos"
+                    :key="video.heading"
+                    :cols="12"
+                    :xl="3"
+                    :lg="4"
+                    :md="4"
+                    :sm="6"
                 >
-                    <v-card
-                        class=""
-                        outlined
-                        tile
-                    >
-                        <h2 style="text-align: center;">{{ video.heading }}</h2>
+                    <v-card class="" outlined tile>
+
+                        <h3 style="text-align: center;">{{ video.heading }}</h3>
 
                         <div style="padding:56.25% 0 0 0;position:relative;">
                             <iframe 
