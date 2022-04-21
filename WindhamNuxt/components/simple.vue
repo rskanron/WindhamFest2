@@ -1,15 +1,21 @@
 <template>
   <div>
-    <v-parallax dark app v-bind:src="this.banner_image">
-      <v-row align="center" justify="center">
+     <v-img
+     contain
+      :max-height="600"
+      :src="this.banner_image"
+    ></v-img>
+
+    <!-- <v-parallax dark app v-bind:src="this.banner_image">
+      <v-row v-if="this.heading" align="center" justify="center">
         <v-col class="text-center" cols="12">
-          <h1 class="display-2 font-weight-light">{{ this.heading }}</h1>
+          <h1 id="mainHeading" class="display-2 font-weight-heavy">{{ this.heading }}</h1>
           <br>
-          <h2 class="font-weight-thin">{{ this.subHeading }}</h2>
+          <h2 id="subHeading" class="font-weight-thin">{{ this.subHeading }}</h2>
         </v-col>
       </v-row>
       <v-row></v-row>
-    </v-parallax>
+    </v-parallax> -->
 
     <v-main>
       <v-container>
@@ -26,6 +32,28 @@
 
   </div>
 </template>
+
+<style scoped>
+#mainHeading {
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+  margin-top: 2%;
+  color: white;
+  border-style: ridge;
+  border-width: 8px;
+  width: 300px;;
+  line-height: 250%;
+  border-color: white; 
+  border-radius: 10px;
+  background-color: red; 
+}
+
+#subHeading {
+  font-family:monospace;
+}
+</style>
+
 
 <script>
   export default {
