@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     
-   <v-navigation-drawer v-model="sidebar" temporary app>
+   <!-- <v-navigation-drawer v-model="sidebar" temporary app>
       <v-list>
         <v-list-item v-for="(item, i) in navigation" :key="i" :to="item.path" router exact>
           <v-list-item-action>
@@ -12,7 +12,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
 
     <v-app-bar app>
       <span class="hidden-sm-and-up">
