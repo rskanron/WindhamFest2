@@ -139,12 +139,12 @@ export default {
 
       console.log("CURRENT DIRECTORY: " + __dirname);
 
-      let preview = isDev ? "&preview=1";
+      let preview = isDev ? "&preview=1" : "";
 
       pageTypes.forEach(pageType => {
         let simplePagesResponse = request(
           'GET', 
-          `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}{preview}`);
+          `https://api.buttercms.com/v2/pages/${pageType}?auth_token=${process.env.VUE_APP_BUTTER_API_KEY}${preview}`);
           
         var pagesJson = JSON.parse(simplePagesResponse.getBody()).data;
         // console.log(pagesJson);
