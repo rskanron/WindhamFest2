@@ -103,7 +103,7 @@ export default {
       themes: {
         dark: {
           primary: colors.red,
-          secondary: colors.indigo,
+          secondary: colors.blue.darken2,
           accent: colors.shades.white,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
