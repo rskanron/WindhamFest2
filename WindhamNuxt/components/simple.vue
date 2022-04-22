@@ -1,8 +1,8 @@
 <template>
   <div>
-     <v-img
-     contain
-      :max-height="600"
+     <v-img v-if="this.banner_image.length"
+      contain
+      :max-height="500"
       :src="this.banner_image"
     ></v-img>
 
@@ -50,7 +50,7 @@
 }
 
 #subHeading {
-  font-family:monospace;
+  font-family:'Courier New', Courier, monospace
 }
 </style>
 
@@ -60,19 +60,19 @@
     props: {
       banner_image: {
         type: String,
-        require: true,
+        require: false,
       },
       heading: {
         type: String,
-        required: true
+        required: false
       },
       subHeading: {
         type: String,
-        required: true,
+        required: false,
       },
       body: {
         type: String,
-        required: true
+        required: false
       }
     }
   }
