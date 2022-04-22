@@ -1,47 +1,48 @@
 <template>
-    <v-main>
-        <v-container>
-            <h1 style="text-align: center">{{ heading }}</h1>
-            <h2 style="text-align: center">{{ subHeading }}</h2>
-            <p style="text-align: center" v-html="description"></p>
+    <div>
+        <h1 style="text-align: center">{{ heading }}</h1>
+        <h2 style="text-align: center">{{ subHeading }}</h2>
+        <p style="text-align: center" v-html="description"></p>
 
-            <v-row class="mb-12">
-                <v-col 
-                    v-for="video in videos"
-                    :key="video.heading"
-                    :cols="12"
-                    :xl="3"
-                    :lg="4"
-                    :md="4"
-                    :sm="6"
-                >
-                    <v-card class="" outlined tile>
+        <br />
 
-                        <h3 style="text-align: center;">{{ video.heading }}</h3>
+        <v-row class="mb-12">
+            <v-col 
+                v-for="video in videos"
+                :key="video.heading"
+                :cols="12"
+                :xl="3"
+                :lg="4"
+                :md="4"
+                :sm="6"
+            >
+                <v-card class="" outlined tile>
 
-                        <div style="padding:56.25% 0 0 0;position:relative;">
-                            <iframe 
-                                :src="video.video_url + `?title=0&byline=0`"
-                                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                                frameborder="0" 
-                                allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                            >
-                            </iframe>
-                        </div>
-                            
-                        <h3 v-html=video.description></h3>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
+                    <h3 style="text-align: center;">{{ video.heading }}</h3>
+
+                    <div style="padding:56.25% 0 0 0;position:relative;">
+                        <iframe 
+                            :src="video.video_url + `?title=0&byline=0`"
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                        >
+                        </iframe>
+                    </div>
+                        
+                    <h3 v-html=video.description></h3>
+                </v-card>
+            </v-col>
+        </v-row>
         
         <p style="text-align: center;" class="vimeo-description">
-            Videos Produced by Geoff Thomas - <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
+            Many of these videos were produced by Geoff Thomas
         </p>
-
-    </v-main>
-
+        <p style="text-align: center;">
+            <a href="https://vimeo.com/hunglowfilms">Hung Low Films</a>
+        </p>
+    </div>
 
 </template>
 

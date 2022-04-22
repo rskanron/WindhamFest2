@@ -11,7 +11,7 @@ if(config.error){
   console.log('------- env file loaded --------')
 }
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== 'production' || process.env.CONTEXT !== 'production';
 
 export default {
   mode: 'universal',
@@ -102,9 +102,9 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken4,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          primary: colors.red,
+          secondary: colors.indigo,
+          accent: colors.shades.white,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
